@@ -19,6 +19,10 @@
 		BF9207351858B4DA006DFFFA /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF92071D1858B4DA006DFFFA /* UIKit.framework */; };
 		BF92073D1858B4DA006DFFFA /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = BF92073B1858B4DA006DFFFA /* InfoPlist.strings */; };
 		BF92073F1858B4DA006DFFFA /* XMLDemoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = BF92073E1858B4DA006DFFFA /* XMLDemoTests.m */; };
+		BF92074A1858B50A006DFFFA /* LJJViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF9207491858B50A006DFFFA /* LJJViewController.m */; };
+		BFC577DD185ADAFC009EFA8B /* LJJXMLElement.m in Sources */ = {isa = PBXBuildFile; fileRef = BFC577DC185ADAFC009EFA8B /* LJJXMLElement.m */; };
+		BFC577E0185AE293009EFA8B /* NSString+Helper.m in Sources */ = {isa = PBXBuildFile; fileRef = BFC577DF185AE293009EFA8B /* NSString+Helper.m */; };
+		BFC577E6185AF0FA009EFA8B /* LJJXMLTool.m in Sources */ = {isa = PBXBuildFile; fileRef = BFC577E5185AF0FA009EFA8B /* LJJXMLTool.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -48,6 +52,14 @@
 		BF92073A1858B4DA006DFFFA /* XMLDemoTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "XMLDemoTests-Info.plist"; sourceTree = "<group>"; };
 		BF92073C1858B4DA006DFFFA /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		BF92073E1858B4DA006DFFFA /* XMLDemoTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XMLDemoTests.m; sourceTree = "<group>"; };
+		BF9207481858B50A006DFFFA /* LJJViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LJJViewController.h; sourceTree = "<group>"; };
+		BF9207491858B50A006DFFFA /* LJJViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LJJViewController.m; sourceTree = "<group>"; };
+		BFC577DB185ADAFC009EFA8B /* LJJXMLElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LJJXMLElement.h; sourceTree = "<group>"; };
+		BFC577DC185ADAFC009EFA8B /* LJJXMLElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LJJXMLElement.m; sourceTree = "<group>"; };
+		BFC577DE185AE293009EFA8B /* NSString+Helper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Helper.h"; sourceTree = "<group>"; };
+		BFC577DF185AE293009EFA8B /* NSString+Helper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Helper.m"; sourceTree = "<group>"; };
+		BFC577E4185AF0FA009EFA8B /* LJJXMLTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LJJXMLTool.h; sourceTree = "<group>"; };
+		BFC577E5185AF0FA009EFA8B /* LJJXMLTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LJJXMLTool.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -109,6 +121,14 @@
 			children = (
 				BF9207281858B4DA006DFFFA /* LJJAppDelegate.h */,
 				BF9207291858B4DA006DFFFA /* LJJAppDelegate.m */,
+				BF9207481858B50A006DFFFA /* LJJViewController.h */,
+				BF9207491858B50A006DFFFA /* LJJViewController.m */,
+				BFC577DB185ADAFC009EFA8B /* LJJXMLElement.h */,
+				BFC577DC185ADAFC009EFA8B /* LJJXMLElement.m */,
+				BFC577DE185AE293009EFA8B /* NSString+Helper.h */,
+				BFC577DF185AE293009EFA8B /* NSString+Helper.m */,
+				BFC577E4185AF0FA009EFA8B /* LJJXMLTool.h */,
+				BFC577E5185AF0FA009EFA8B /* LJJXMLTool.m */,
 				BF92072B1858B4DA006DFFFA /* Images.xcassets */,
 				BF9207201858B4DA006DFFFA /* Supporting Files */,
 			);
@@ -240,8 +260,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BFC577E0185AE293009EFA8B /* NSString+Helper.m in Sources */,
 				BF9207261858B4DA006DFFFA /* main.m in Sources */,
+				BFC577DD185ADAFC009EFA8B /* LJJXMLElement.m in Sources */,
 				BF92072A1858B4DA006DFFFA /* LJJAppDelegate.m in Sources */,
+				BFC577E6185AF0FA009EFA8B /* LJJXMLTool.m in Sources */,
+				BF92074A1858B50A006DFFFA /* LJJViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -442,6 +466,7 @@
 				BF9207441858B4DA006DFFFA /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		BF9207451858B4DA006DFFFA /* Build configuration list for PBXNativeTarget "XMLDemoTests" */ = {
 			isa = XCConfigurationList;
@@ -450,6 +475,7 @@
 				BF9207471858B4DA006DFFFA /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
