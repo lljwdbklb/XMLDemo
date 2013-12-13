@@ -29,20 +29,34 @@
 @end
 
 @implementation LJJXMLTool
+
 - (id)initWithURL:(NSURL *)url {
     if (self = [super init]) {
-        _parser = [[NSXMLParser alloc]initWithContentsOfURL:[NSURL URLWithString:@"http://www.w3school.com.cn/example/xmle/simple.xml"]];
+        _parser = [[NSXMLParser alloc]initWithContentsOfURL:url];
         [_parser setDelegate:self];
-        
-        [_parser parse];
     }
     return self;
+}
+
+- (id)initWithURL:(NSURL *)url delegate:(id<LJJXMLToolDelegate>)delegate{
+    if (self = [self initWithURL:url]) {
+        self.delegate = delegate;
+        [self parse];
+    }
+    return self;
+}
+
+- (BOOL)parse {
+    return [_parser parse];
 }
 
 #pragma mark xmlParser 代理
 #pragma mark 开始解析
 - (void)parserDidStartDocument:(NSXMLParser *)parser {
-    NSLog(@"开始解析");
+//    NSLog(@"开始解析");
+    if ([self.delegate respondsToSelector:@selector(parseDidStartInTool:)]) {
+        [self.delegate parseDidStartInTool:self];
+    }
 }
 
 #pragma mart 正在开始解析
@@ -107,7 +121,7 @@ foundCharacters:(NSString *)string {
 //    NSLog(@"-----------------\n");
 }
 
-#pragma mart 正在结束解析
+#pragma mart 正在结束当前解析
 - (void)parser:(NSXMLParser *)parser
  didEndElement:(NSString *)elementName
   namespaceURI:(NSString *)namespaceURI
@@ -131,11 +145,18 @@ foundCharacters:(NSString *)string {
 //    NSLog(@"elementName -- %@",elementName);
 //    NSLog(@"-----------------\n\n");
 }
-
+#pragma mark 结束解析
 - (void)parserDidEndDocument:(NSXMLParser *)parser {
-    NSLog(@"结束解析");
-    [parser abortParsing];
+//    NSLog(@"结束解析");
+//    [parser abortParsing];
+    if ([self.delegate respondsToSelector:@selector(tool:didEndParsedAt:)] ) {
+        [self.delegate tool:self didEndParsedAt:_rootElement];
+    }
+    
+    NSLog(@"%@",_rootElement);
 }
-
-
+#pragma mark 解析失败
+- (void)parser:(NSXMLParser *)parser parseErrorOccurred:(NSError *)parseError {
+    NSLog(@"error --- %@",parseError.localizedDescription);
+}
 @end

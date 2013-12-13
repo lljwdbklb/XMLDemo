@@ -7,6 +7,17 @@
 //
 
 #import <Foundation/Foundation.h>
+@class LJJXMLTool;
+@class LJJXMLElement;
+@protocol LJJXMLToolDelegate <NSObject>
+
+- (void)parseDidStartInTool:(LJJXMLTool *)tool;
+
+- (void)tool:(LJJXMLTool *)tool didEndParsedAt:(LJJXMLElement *)element;
+
+@end
+
+
 @class LJJXMLElement;
 @interface LJJXMLTool : NSObject
 /**
@@ -18,8 +29,19 @@
  */
 - (id)initWithURL:(NSURL *)url;
 
-//根元素
-@property (readonly, nonatomic)LJJXMLElement * rootElement;
 
+@property (weak, nonatomic) id<LJJXMLToolDelegate> delegate;
+/**
+ *  构造方法
+ *  自动调用parse
+ *
+ *  @param url      解析地址URL
+ *  @param delegate 代理
+ *
+ *  @return 当前对象
+ */
+- (id)initWithURL:(NSURL *)url delegate:(id<LJJXMLToolDelegate>)delegate;
+
+- (BOOL)parse;
 
 @end

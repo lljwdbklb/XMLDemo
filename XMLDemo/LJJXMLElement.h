@@ -10,19 +10,27 @@
 
 @interface LJJXMLElement : NSObject
 //标签名
-@property (copy, nonatomic)         NSString * name;
+@property (copy, nonatomic)                     NSString * name;
 //标签值 若该标签为节点标签值为空
-@property (copy, nonatomic)         NSString * value;
-
-@property (assign, nonatomic)       NSInteger index;
+@property (copy, nonatomic)                     NSString * value;
+//标书点
+@property (assign, nonatomic)                   NSInteger index;
 
 //是否是节点
-@property (assign, nonatomic, getter = isNode)       BOOL node;
+@property (assign, nonatomic, getter = isNode)  BOOL node;
+//父节点
+@property (weak, nonatomic)                     LJJXMLElement * parent;
 
-@property (assign, nonatomic)       LJJXMLElement * parent;
-
-//子标签
-@property (readonly, nonatomic)     NSArray * elements;
+//所有子标签
+@property (strong, readonly, nonatomic)         NSArray * elements;
+/**
+ *  获取指定子元素集
+ *
+ *  @param name 元素名
+ *
+ *  @return 方法子元素集
+ */
+- (NSArray *)subElementWithName:(NSString *)name;
 
 /**
  *  添加一个元素
