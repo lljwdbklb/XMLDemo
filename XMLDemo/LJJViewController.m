@@ -46,7 +46,7 @@
 //    [_parser parse];
     
     
-    _tool = [[LJJXMLTool alloc]initWithURL:[NSURL URLWithString:@"http://www.w3school.com.cn/example/xmle/note.xml"] delegate:self];
+    _tool = [[LJJXMLTool alloc]initWithURL:[NSURL URLWithString:@"http://www.w3school.com.cn/example/xmle/cd_catalog.xml"] delegate:self];
     
 }
 
@@ -56,7 +56,10 @@
 
 - (void)tool:(LJJXMLTool *)tool didEndParsedAt:(LJJXMLElement *)element {
     NSLog(@"结束解析");
-//    NSLog(@"%@",element);
+//    NSLog(@"%@",element); // 这句运行有错误
+    NSLog(@"%@",[element json]);
+    
+    [[element json] writeToFile:@"/Users/jun/Desktop/123.json" atomically:YES encoding:NSUTF8StringEncoding error:nil];
 }
 
 //#pragma mark 开始解析

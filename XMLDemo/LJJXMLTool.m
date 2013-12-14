@@ -153,7 +153,7 @@ foundCharacters:(NSString *)string {
         [self.delegate tool:self didEndParsedAt:_rootElement];
     }
     
-    NSLog(@"%@",_rootElement);
+//    NSLog(@"%@",_rootElement);
 }
 #pragma mark 解析失败
 - (void)parser:(NSXMLParser *)parser parseErrorOccurred:(NSError *)parseError {
