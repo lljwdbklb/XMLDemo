@@ -30,7 +30,24 @@
 
 @implementation LJJXMLTool
 
+- (id)initWithData:(NSData *)data {
+    if (self = [super init]) {
+        _parser = [[NSXMLParser alloc]initWithData:data];
+        [_parser setDelegate:self];
+    }
+    return self;
+}
+
+- (id)initWithData:(NSData *)data delegate:(id<LJJXMLToolDelegate>)delegate {
+    if (self = [self initWithData:data]) {
+        self.delegate = delegate;
+        [self parse];
+    }
+    return self;
+}
+
 - (id)initWithURL:(NSURL *)url {
+     NSAssert(url != nil, @"URL 不能为空！");
     if (self = [super init]) {
         _parser = [[NSXMLParser alloc]initWithContentsOfURL:url];
         [_parser setDelegate:self];
@@ -41,7 +58,9 @@
 - (id)initWithURL:(NSURL *)url delegate:(id<LJJXMLToolDelegate>)delegate{
     if (self = [self initWithURL:url]) {
         self.delegate = delegate;
-        [self parse];
+        if (![self parse]) {
+            NSLog(@"%@",_parser.parserError.localizedDescription);
+        }
     }
     return self;
 }

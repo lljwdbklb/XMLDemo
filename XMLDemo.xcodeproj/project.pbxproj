@@ -23,7 +23,6 @@
 		BFC577DD185ADAFC009EFA8B /* LJJXMLElement.m in Sources */ = {isa = PBXBuildFile; fileRef = BFC577DC185ADAFC009EFA8B /* LJJXMLElement.m */; };
 		BFC577E0185AE293009EFA8B /* NSString+Helper.m in Sources */ = {isa = PBXBuildFile; fileRef = BFC577DF185AE293009EFA8B /* NSString+Helper.m */; };
 		BFC577E6185AF0FA009EFA8B /* LJJXMLTool.m in Sources */ = {isa = PBXBuildFile; fileRef = BFC577E5185AF0FA009EFA8B /* LJJXMLTool.m */; };
-		BFC577E9185AFACD009EFA8B /* NSArray+Log.m in Sources */ = {isa = PBXBuildFile; fileRef = BFC577E8185AFACD009EFA8B /* NSArray+Log.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -61,8 +60,6 @@
 		BFC577DF185AE293009EFA8B /* NSString+Helper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Helper.m"; sourceTree = "<group>"; };
 		BFC577E4185AF0FA009EFA8B /* LJJXMLTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LJJXMLTool.h; sourceTree = "<group>"; };
 		BFC577E5185AF0FA009EFA8B /* LJJXMLTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LJJXMLTool.m; sourceTree = "<group>"; };
-		BFC577E7185AFACD009EFA8B /* NSArray+Log.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+Log.h"; sourceTree = "<group>"; };
-		BFC577E8185AFACD009EFA8B /* NSArray+Log.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+Log.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -132,8 +129,6 @@
 				BFC577DF185AE293009EFA8B /* NSString+Helper.m */,
 				BFC577E4185AF0FA009EFA8B /* LJJXMLTool.h */,
 				BFC577E5185AF0FA009EFA8B /* LJJXMLTool.m */,
-				BFC577E7185AFACD009EFA8B /* NSArray+Log.h */,
-				BFC577E8185AFACD009EFA8B /* NSArray+Log.m */,
 				BF92072B1858B4DA006DFFFA /* Images.xcassets */,
 				BF9207201858B4DA006DFFFA /* Supporting Files */,
 			);
@@ -266,7 +261,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				BFC577E0185AE293009EFA8B /* NSString+Helper.m in Sources */,
-				BFC577E9185AFACD009EFA8B /* NSArray+Log.m in Sources */,
 				BF9207261858B4DA006DFFFA /* main.m in Sources */,
 				BFC577DD185ADAFC009EFA8B /* LJJXMLElement.m in Sources */,
 				BF92072A1858B4DA006DFFFA /* LJJAppDelegate.m in Sources */,

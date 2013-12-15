@@ -8,8 +8,6 @@
 
 #import "LJJXMLElement.h"
 
-//#import "NSArray+Log.h"
-
 @interface LJJXMLElement()
 {
     NSMutableArray * _elements;
@@ -55,7 +53,12 @@
 }
 
 - (NSString *)description {
-    return [NSString stringWithFormat:@"<LJJXMLElement: %p, name: %@, value: %@, index: %d, node: %@, parent: %@, elements: %@>",self,_name,_value,_index,_node?@"YES":@"NO",_parent,_elements];
+    NSMutableString * lever = [NSMutableString string];
+    for (NSInteger i = 0; i < self.index + 1; i ++) {
+        [lever appendString:@"\t"];
+    }
+    //错误原因：在此调用了父类对象，存在死循环而出现运行出错。
+    return [NSString stringWithFormat:@"%@<LJJXMLElement: %p, name: %@, value: %@, index: %d, node: %@, parent: %p, elements: %@>",lever,self,_name,_value,_index,_node?@"YES":@"NO",_parent,_elements];
 }
 
 - (NSString *)json {
@@ -82,17 +85,26 @@
         if (elements.count > 1) {//数组
             [json appendFormat:@"[\n"];
             [elements enumerateObjectsUsingBlock:^(id obj2, NSUInteger idx, BOOL *stop) {
-                [json appendFormat:@"%@,",[obj2 json]];
+                LJJXMLElement * e = obj2;
+//                [json appendFormat:@"%@,",[obj2 json]];
+                if (e.node) {//是节点
+                    [json appendFormat:@"%@",[e json]];
+                    NSLog(@"%@",[e json]);
+                } else {
+                    [json appendFormat:@"%@\t\"%@\"",lever,e.value];
+                }
+                [json appendFormat:@",\n"];
             }];
             //去掉最后一个逗号
-            [json deleteCharactersInRange:NSMakeRange(json.length - 1, 1)];
+            [json deleteCharactersInRange:NSMakeRange(json.length - 2, 2)];
             [json appendFormat:@"\n%@]",lever];
         } else {//非数组
-            LJJXMLElement * element = elements[0];
-            if (element.node) {//是节点
-                [json appendFormat:@"\"%@\"",[element json]];
+            LJJXMLElement * e = elements[0];
+            if (e.node) {//是节点
+                [json appendFormat:@"%@",[e json]];
+//                NSLog(@"%@",[e json]);
             } else {//不是节点
-                [json appendFormat:@"\"%@\"",element.value];
+                [json appendFormat:@"\"%@\"",e.value];
             }
         }
         [json appendFormat:@",\n"];
