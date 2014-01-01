@@ -147,42 +147,19 @@
 
 - (id)objectIsValue:(BOOL)flag {
     NSMutableDictionary * dictM = [NSMutableDictionary dictionary];
-    
-//    [dictM setObject:self.name forKey:@"name"];
-    if (self.value.length > 0) {
-//        if (flag) return self.value;
+    if (self.value.length > 0) { // 有值
+        if (flag) return self.value;
         [dictM setObject:self.value forKey:self.name];
-    } else if (_elements.count > 0) {
-//        NSMutableArray * subArrayM = [NSMutableArray array];
-//        for (LJJXMLElement * element in _elements) {
-//            [subArrayM addObject:[element objects]];
-//        }
-//        [dictM setObject:subArrayM forKey:@"elements"];
+    } else if (_elements.count > 0) {// 有数据
         NSArray * names = [[self subElementNames] allObjects];
-        if (names.count > 1) {
-            
+        if (names.count > 1) {// 有多条不同键的数据
             for (NSString * name in names) {
                 NSArray * subElements = [self subElementWithName:name];
-//                for (LJJXMLElement * element in subElements) {
-////                    [subDictM setDictionary:[element objects]];
-//                    [dictM setObject:[element objectIsValue:YES] forKey:element.name];
-//                }
-                
                 for (LJJXMLElement * element in subElements) {
-                    //                    [subDictM setDictionary:[element objects]];
-                    NSDictionary * dict = [element objectIsValue:YES];
-//                    [dictM setObject:dict[key] forKey:key];
-                    if (dict.count == 1) {
-                        NSString * key = [dict allKeys][0];
-                        [dictM setObject:dict[key] forKey:key];
-                    } else {
-                        [dictM setObject:dict forKey:element.name];
-                    }
+                    [dictM setObject:[element objectIsValue:YES] forKey:element.name];
                 }
-                
             }
-//            [dictM setObject:subDictM forKey:self.name];
-        } else if(names.count == 1) {
+        } else if(names.count == 1) {// 只有一条不同键的数据
             NSMutableArray * subArrayM = [NSMutableArray array];
             NSArray * subElements = [self subElementWithName:names[0]];
             for (LJJXMLElement * element in subElements) {
