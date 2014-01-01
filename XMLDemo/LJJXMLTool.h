@@ -11,15 +11,37 @@
 @class LJJXMLElement;
 @protocol LJJXMLToolDelegate <NSObject>
 
+@optional
+/**
+ *  分析开始
+ *
+ *  @param tool 工具类
+ */
 - (void)parseDidStartInTool:(LJJXMLTool *)tool;
-
+/**
+ *  分析结束
+ *
+ *  @param tool 工具类
+ */
 - (void)tool:(LJJXMLTool *)tool didEndParsedAt:(LJJXMLElement *)element;
-
 @end
+
+typedef void(^LJJXMLParseSuccess)(LJJXMLElement * element);
+typedef void(^LJJXMLParseFailed)(NSError * error);
 
 
 @class LJJXMLElement;
 @interface LJJXMLTool : NSObject
+
+/**
+ *  解析XML
+ *
+ *  @param url     XML链接
+ *  @param success 成功回调
+ *  @param failed  失败回调
+ */
++ (void)parseXMLWithURL:(NSURL *)url success:(LJJXMLParseSuccess)success failed:(LJJXMLParseFailed)failed;
+
 /**
  *  构造方法
  *

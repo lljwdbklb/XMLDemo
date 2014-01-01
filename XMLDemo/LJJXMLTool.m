@@ -12,6 +12,12 @@
 
 #import "NSString+Helper.h"
 
+#ifdef DEBUG
+#define LJJLog(...) NSLog(__VA_ARGS__)
+#else
+#define LJJLog(...)
+#endif
+
 @interface LJJXMLTool()<NSXMLParserDelegate>
 {
     NSXMLParser * _parser;
@@ -26,9 +32,20 @@
     //下标
     NSInteger _index;
 }
+
+@property (copy, nonatomic)LJJXMLParseSuccess success;
+@property (copy, nonatomic)LJJXMLParseFailed failed;
+
 @end
 
 @implementation LJJXMLTool
+
++ (void)parseXMLWithURL:(NSURL *)url success:(LJJXMLParseSuccess)success failed:(LJJXMLParseFailed)failed {
+    LJJXMLTool * tool = [[LJJXMLTool alloc]initWithURL:url];
+    tool.success = success;
+    tool.failed = failed;
+    [tool parse];
+}
 
 - (id)initWithData:(NSData *)data {
     if (self = [super init]) {
@@ -59,7 +76,7 @@
     if (self = [self initWithURL:url]) {
         self.delegate = delegate;
         if (![self parse]) {
-            NSLog(@"%@",_parser.parserError.localizedDescription);
+            LJJLog(@"%@",_parser.parserError.localizedDescription);
         }
     }
     return self;
@@ -139,7 +156,6 @@ foundCharacters:(NSString *)string {
     } else if ([_currentNodeElement.name isEqualToString:elementName]) {
         _currentNodeElement = _currentNodeElement.parent;
     } else {
-        //        [_currentNodeElement addElement:_currentElement];
         _currentNodeElement = _currentElement.parent;
     }
 }
@@ -149,14 +165,27 @@ foundCharacters:(NSString *)string {
         [self.delegate tool:self didEndParsedAt:_rootElement];
     }
     
-//    NSLog(@"%@",_rootElement);
+    if (self.success) {
+        self.success(_rootElement);
+    }
 }
 #pragma mark 解析失败
 - (void)parser:(NSXMLParser *)parser parseErrorOccurred:(NSError *)parseError {
-    NSLog(@"error --- %@",parseError.localizedDescription);
+    LJJLog(@"error --- %@",parseError.localizedDescription);
+    if (self.failed) {
+        self.failed(parseError);
+    }
 }
 #pragma mark 确认错误发生
 - (void)parser:(NSXMLParser *)parser validationErrorOccurred:(NSError *)validationError {
-    NSLog(@"error --- %@",validationError.localizedDescription);
+    LJJLog(@"error --- %@",validationError.localizedDescription);
+    if (self.failed) {
+        self.failed(validationError);
+    }
+}
+
+
+- (void)dealloc {
+    LJJLog(@"释放");
 }
 @end

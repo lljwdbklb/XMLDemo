@@ -28,7 +28,7 @@
 //    //下标
 //    NSInteger _index;
     
-    LJJXMLTool * _tool;
+//    LJJXMLTool * _tool;
     
 }
 
@@ -51,20 +51,28 @@
     //http://www.w3school.com.cn/example/xmle/cd_catalog.xml
     //http://www.w3school.com.cn/example/xmle/simple.xml
     NSURL * url = [NSURL URLWithString:@"http://api.caipiao.163.com/period.html?product=caipiao_client&mobileType=iphone&ver=3.20&channel=appstore&apiVer=1.1&apiLevel=1&deviceId=5477BCBD-7AD6-4278-AEDF-2B02C140132A&ifCurrent=1&totalStatusSupport=1&product=caipiao_client&mobileType=iphone&ver=3.20&channel=appstore&apiVer=1.1&apiLevel=1&deviceId=5477BCBD-7AD6-4278-AEDF-2B02C140132A"];
-    _tool = [[LJJXMLTool alloc]initWithURL:url delegate:self];
-}
-
-- (void)parseDidStartInTool:(LJJXMLTool *)tool {
-    NSLog(@"开始解析");
-}
-
-- (void)tool:(LJJXMLTool *)tool didEndParsedAt:(LJJXMLElement *)element {
-    NSLog(@"结束解析");
-    NSLog(@"%@",[element json]);
-    [[element json] writeToFile:@"/Users/jun/Desktop/123.json" atomically:YES encoding:NSUTF8StringEncoding error:nil];
-    [[element objectIsValue:NO] writeToFile:@"/Users/jun/Desktop/123.plist" atomically:YES];
+//    _tool = [[LJJXMLTool alloc]initWithURL:url delegate:self];
+    
+    
+    [LJJXMLTool parseXMLWithURL:url success:^(LJJXMLElement *element) {
+        NSLog(@"%@",[element json]);
+    } failed:^(NSError *error) {
+        NSLog(@"error --- %@",error.localizedDescription);
+    }];
+    
     
 }
+
+//- (void)parseDidStartInTool:(LJJXMLTool *)tool {
+//    NSLog(@"开始解析");
+//}
+//
+//- (void)tool:(LJJXMLTool *)tool didEndParsedAt:(LJJXMLElement *)element {
+//    NSLog(@"结束解析");
+//    NSLog(@"%@",[element json]);
+//    [[element json] writeToFile:@"/Users/jun/Desktop/123.json" atomically:YES encoding:NSUTF8StringEncoding error:nil];
+//    [[element objectIsValue:NO] writeToFile:@"/Users/jun/Desktop/123.plist" atomically:YES];
+//}
 
 
 @end
