@@ -120,4 +120,78 @@
     return json;
 }
 
+- (id)initWithCoder:(NSCoder *)aDecoder {
+    if (self = [super init]) {
+        self.name = [aDecoder decodeObjectForKey:@"name"];
+        self.value = [aDecoder decodeObjectForKey:@"value"];
+        _elements = [aDecoder decodeObjectForKey:@"elements"];
+        _node = [aDecoder decodeBoolForKey:@"node"];
+        for (LJJXMLElement * element in _elements) {
+            element.parent = self;
+        }
+    }
+    return self;
+}
+
+- (void)encodeWithCoder:(NSCoder *)aCoder {
+    [aCoder encodeObject:self.name forKey:@"name"];
+    if (self.value && self.value.length > 0) {
+        [aCoder encodeObject:self.value forKey:@"value"];
+    }
+    if (self.elements && self.elements.count > 0) {
+        [aCoder encodeObject:self.elements forKey:@"elements"];
+    }
+    [aCoder encodeBool:_node forKey:@"node"];
+}
+
+
+- (id)objectIsValue:(BOOL)flag {
+    NSMutableDictionary * dictM = [NSMutableDictionary dictionary];
+    
+//    [dictM setObject:self.name forKey:@"name"];
+    if (self.value.length > 0) {
+//        if (flag) return self.value;
+        [dictM setObject:self.value forKey:self.name];
+    } else if (_elements.count > 0) {
+//        NSMutableArray * subArrayM = [NSMutableArray array];
+//        for (LJJXMLElement * element in _elements) {
+//            [subArrayM addObject:[element objects]];
+//        }
+//        [dictM setObject:subArrayM forKey:@"elements"];
+        NSArray * names = [[self subElementNames] allObjects];
+        if (names.count > 1) {
+            
+            for (NSString * name in names) {
+                NSArray * subElements = [self subElementWithName:name];
+//                for (LJJXMLElement * element in subElements) {
+////                    [subDictM setDictionary:[element objects]];
+//                    [dictM setObject:[element objectIsValue:YES] forKey:element.name];
+//                }
+                
+                for (LJJXMLElement * element in subElements) {
+                    //                    [subDictM setDictionary:[element objects]];
+                    NSDictionary * dict = [element objectIsValue:YES];
+//                    [dictM setObject:dict[key] forKey:key];
+                    if (dict.count == 1) {
+                        NSString * key = [dict allKeys][0];
+                        [dictM setObject:dict[key] forKey:key];
+                    } else {
+                        [dictM setObject:dict forKey:element.name];
+                    }
+                }
+                
+            }
+//            [dictM setObject:subDictM forKey:self.name];
+        } else if(names.count == 1) {
+            NSMutableArray * subArrayM = [NSMutableArray array];
+            NSArray * subElements = [self subElementWithName:names[0]];
+            for (LJJXMLElement * element in subElements) {
+                [subArrayM addObject:[element objectIsValue:YES]];
+            }
+            if (flag) return @{names[0]:subArrayM};
+            [dictM setObject:@{names[0]:subArrayM} forKey:self.name];
+        }
+    }
+    return dictM;
+}
 @end

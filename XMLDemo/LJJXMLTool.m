@@ -72,7 +72,6 @@
 #pragma mark xmlParser 代理
 #pragma mark 开始解析
 - (void)parserDidStartDocument:(NSXMLParser *)parser {
-//    NSLog(@"开始解析");
     if ([self.delegate respondsToSelector:@selector(parseDidStartInTool:)]) {
         [self.delegate parseDidStartInTool:self];
     }
@@ -86,8 +85,6 @@ didStartElement:(NSString *)elementName
     attributes:(NSDictionary *)attributeDict
 {
     if (_isParser) {
-        //添加到上个节点
-        //        [_currentNodeElement addElement:_currentElement];
         
         //设置为当前节点
         _currentNodeElement = _currentElement;
@@ -111,13 +108,6 @@ didStartElement:(NSString *)elementName
         _currentNodeElement = _rootElement;
     }
     _isParser = YES;
-    
-    
-    
-//    NSLog(@"开始解析3----------");
-//    //    NSLog(@"shouldReportNamespacePrefixes --- %d",[parser shouldReportNamespacePrefixes]);
-//    NSLog(@"elementName -- %@",elementName);
-//    NSLog(@"-----------------\n");
 }
 
 #pragma mark 解析数据
@@ -132,12 +122,6 @@ foundCharacters:(NSString *)string {
     }
     
     _currentElement.value = string;
-    
-//    NSLog(@"foundCharacters解析6----------");
-//    //    NSLog(@"shouldReportNamespacePrefixes --- %d",[parser shouldReportNamespacePrefixes]);
-//    NSLog(@"%d -- %d",[parser lineNumber],[parser columnNumber]);
-//    NSLog(@"string -- %@",string);
-//    NSLog(@"-----------------\n");
 }
 
 #pragma mart 正在结束当前解析
@@ -158,16 +142,9 @@ foundCharacters:(NSString *)string {
         //        [_currentNodeElement addElement:_currentElement];
         _currentNodeElement = _currentElement.parent;
     }
-    
-//    NSLog(@"结束解析4----------");
-//    //    NSLog(@"shouldReportNamespacePrefixes --- %d",[parser shouldReportNamespacePrefixes]);
-//    NSLog(@"elementName -- %@",elementName);
-//    NSLog(@"-----------------\n\n");
 }
 #pragma mark 结束解析
 - (void)parserDidEndDocument:(NSXMLParser *)parser {
-//    NSLog(@"结束解析");
-//    [parser abortParsing];
     if ([self.delegate respondsToSelector:@selector(tool:didEndParsedAt:)] ) {
         [self.delegate tool:self didEndParsedAt:_rootElement];
     }
@@ -177,5 +154,9 @@ foundCharacters:(NSString *)string {
 #pragma mark 解析失败
 - (void)parser:(NSXMLParser *)parser parseErrorOccurred:(NSError *)parseError {
     NSLog(@"error --- %@",parseError.localizedDescription);
+}
+#pragma mark 确认错误发生
+- (void)parser:(NSXMLParser *)parser validationErrorOccurred:(NSError *)validationError {
+    NSLog(@"error --- %@",validationError.localizedDescription);
 }
 @end

@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface LJJXMLElement : NSObject
+@interface LJJXMLElement : NSObject <NSCoding>
 //标签名
 @property (copy, nonatomic)                     NSString        * name;
 //标签值 若该标签为节点标签值为空
@@ -45,4 +45,12 @@
  *  转换成json
  */
 - (NSString *)json;
+/**
+ *  解析成数据类型
+ *
+ *  @param flag YES返回值 NO返回字典
+ *
+ *  @return 返回数据
+ */
+- (id/* NSDictionary* */)objectIsValue:(BOOL)flag;
 @end
